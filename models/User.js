@@ -56,5 +56,16 @@ userSchema.methods.generateToken = function(callback) {
     })
 }
 
+userSchema.statics.findByToken = function(token, callback) {
+    const user = this;
+    jwt.verify(token, 'secretToken', (err, decoded) => {
+        // user-id를 이용하여 토큰을 찾은후 클라이언트에서 가져온 token과 db에 보관된 token이 일치하는지 확인
+        user.findOne({"_id":decoded,"token":token}, (err, user) => {
+            if(err) return callback(er);
+            callback(null, user);
+        });
+    });
+}
+
 const User = mongoose.model('User', userSchema);
 module.exports = {User};
