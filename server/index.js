@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 5000;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -22,6 +22,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get('/', (req, res) => res.send('Hello World'));
+
+app.get('/api/hello', (req, res) => res.send('안녕하세요.'));
 
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
